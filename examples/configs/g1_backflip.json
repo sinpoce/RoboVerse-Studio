@@ -1,0 +1,53 @@
+{
+  "algorithm": "ppo",
+  "algorithms": [
+    "ppo",
+    "algorithms.random_search:train"
+  ],
+  "algorithm_config": {
+    "train_random_search": {
+      "iterations": 10,
+      "horizon": 128,
+      "seed": 7
+    }
+  },
+  "task": {
+    "task_id": "g1_backflip",
+    "label": "Unitree G1 · Backflip",
+    "plugin": "tasks.g1_backflip:create_task",
+    "model": "../../models/unitree_g1/scene.xml",
+    "action_mode": "position",
+    "action_scale": 0.45,
+    "control_dt": 0.02,
+    "episode_seconds": 4.0,
+    "num_envs": 64,
+    "seed": 7,
+    "reward": {
+      "alive": 0.2,
+      "takeoff": 0.8,
+      "rotation": 2.0,
+      "landing": 8.0,
+      "upright": 1.0,
+      "effort": -0.01,
+      "action_rate": -0.01,
+      "fall": -4.0
+    }
+  },
+  "ppo": {
+    "horizon": 128,
+    "iterations": 1000,
+    "epochs": 5,
+    "minibatches": 8,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_ratio": 0.2,
+    "learning_rate": 0.0003,
+    "entropy_coef": 0.005,
+    "value_coef": 0.5,
+    "max_grad_norm": 1.0,
+    "hidden": [256, 256],
+    "device": "auto",
+    "seed": 7,
+    "checkpoint_every": 25
+  }
+}

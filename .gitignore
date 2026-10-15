@@ -1,0 +1,13 @@
+.build/
+.venv/
+**/.venv/
+*.xcodeproj/
+.DS_Store
+__pycache__/
+*.pyc
+*.log
+MUJOCO_LOG.TXT
+dist/
+.refactor-backup/
+external/
+runs/

@@ -1,0 +1,40 @@
+# XcodeGen spec -> RoboVerseStudio.xcodeproj (produces a real .app bundle).
+#   brew install xcodegen && xcodegen generate && open RoboVerseStudio.xcodeproj
+name: RoboVerseStudio
+options:
+  bundleIdPrefix: com.sinpoce
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "0.4.0"
+    CURRENT_PROJECT_VERSION: "4"
+    # Local, non-App-Store build: no sandbox so the app can spawn the Python
+    # sidecar and open a localhost socket. Hardened runtime off for easy runs.
+    ENABLE_HARDENED_RUNTIME: false
+    CODE_SIGN_STYLE: Automatic
+targets:
+  RoboVerseStudio:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/MjbatchStudio
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sinpoce.roboverse.studio
+        PRODUCT_NAME: RoboVerseStudio
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_KEY_CFBundleName: RoboVerse Studio
+        INFOPLIST_KEY_CFBundleDisplayName: RoboVerse Studio
+        INFOPLIST_KEY_CFBundleDevelopmentRegion: en
+        INFOPLIST_KEY_NSPrincipalClass: NSApplication
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.developer-tools
+    scheme:
+      # So the bundled .app can locate .venv/ and python/ at runtime. XcodeGen
+      # expands $(SRCROOT) to this project directory.
+      environmentVariables:
+        - variable: MJBATCH_STUDIO_HOME
+          value: $(SRCROOT)
+          isEnabled: true

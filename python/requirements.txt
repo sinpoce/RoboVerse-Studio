@@ -1,0 +1,4 @@
+# Versions verified by the workbench acceptance suite on Apple Silicon macOS.
+-r requirements-lock.txt
+torch==2.9.0
+PyYAML>=6,<7
